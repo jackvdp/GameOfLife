@@ -1,17 +1,9 @@
 .cell {
   background-color: lightgrey;
-  color: #fff;
-  border-radius: 1px;
-  padding: 5px;
-  font-size: 100%;
 }
 
 .activeCell {
   background-color: black;
-  color: #fff;
-  border-radius: 1px;
-  padding: 5px;
-  font-size: 100%;
 }
   
 .grid {
@@ -22,5 +14,5 @@
   grid-template-rows: repeat(25, 25px);
   grid-auto-flow: column;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
 }
