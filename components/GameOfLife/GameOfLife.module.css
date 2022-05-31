@@ -1,4 +1,8 @@
 .body {
     text-align: center;
-    padding: 20px;
+}
+
+.button {
+    margin: 20px;
+    width: 50px;
 }

@@ -8,7 +8,7 @@ export const GameOfLife = () => {
   const [items, setItems] = useState(Array<boolean>(625).fill(false))
   const [playing, setPlaying] = useState(false)
 
-  let interval: NodeJS.Timer;
+  let timeout: NodeJS.Timer;
 
   useEffect(() => {
     if (playing) {
@@ -17,6 +17,16 @@ export const GameOfLife = () => {
       clearTimer()
     }
   })
+
+  function startTimer() {
+    timeout = setTimeout(() => {
+      changeGridToNextGeneration()
+    }, 1000);
+  }
+
+  function clearTimer() {
+    clearTimeout(timeout)
+  }
   
   function toggleStateOfCell(index: number, newValue: boolean) {  
     if (!playing) {
@@ -24,16 +34,6 @@ export const GameOfLife = () => {
       newArray[index] = newValue
       setItems(newArray)
     }
-  }
-
-  function startTimer() {
-    interval = setTimeout(() => {
-      changeGridToNextGeneration()
-    }, 1000);
-  }
-
-  function clearTimer() {
-    clearInterval(interval)
   }
 
   function changeGridToNextGeneration() {
@@ -44,13 +44,25 @@ export const GameOfLife = () => {
 
   function toggleGame() {
     playing ? setPlaying(false) : setPlaying(true)
+    clearTimer()
+  }
+
+  function resetGame() {
+    setPlaying(false)
+    clearTimer()
+    setItems(Array<boolean>(625).fill(false))
   }
 
   return (
     <div className={Styles.body}>
-      <div>Game Of Life</div>
+      <h1>Game Of Life</h1>
+      <p>Select cells and start the game!</p>
       <Grid items={items} callBack={toggleStateOfCell} />
-      <button onClick={toggleGame}>{playing ? "Stop" : "Play"}</button>
+      <div>
+        <button className={Styles.button} onClick={resetGame}>Reset</button>
+        <button className={Styles.button} onClick={toggleGame}>{playing ? "Stop" : "Play"}</button>
+        <button className={Styles.button} disabled={playing} onClick={changeGridToNextGeneration}>Next</button>
+      </div>
     </div>
   )
 }
