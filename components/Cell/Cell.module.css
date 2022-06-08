@@ -1,0 +1,7 @@
+.cell {
+  background-color: lightgrey;
+}
+
+.activeCell {
+  background-color: black;
+}
