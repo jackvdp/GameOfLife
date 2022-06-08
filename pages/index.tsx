@@ -1,8 +1,11 @@
 import type { NextPage } from 'next'
+import {GameOfLife as Component} from '../components/GameOfLife'
 
-const Home: NextPage = () => {
-  return (<p>Hello World!</p>
+
+const GameOfLife: NextPage = () => {
+  return (
+    <Component></Component>
   )
 }
 
-export default Home
+export default GameOfLife

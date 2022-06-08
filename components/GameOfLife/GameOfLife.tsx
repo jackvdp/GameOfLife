@@ -6,8 +6,10 @@ import { Inputs } from '../Inputs/Inputs';
 
 export const GameOfLife = () => {
 
-  const [gridSize, setGridSize] = useState(26)
-  const [items, setItems] = useState(Array<boolean>(676).fill(false))
+  const defaultSize = 25
+
+  const [gridSize, setGridSize] = useState(defaultSize)
+  const [items, setItems] = useState(Array<boolean>(defaultSize * defaultSize).fill(false))
   const [playing, setPlaying] = useState(false)
   
   let timeout: NodeJS.Timer;
