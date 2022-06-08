@@ -1,21 +1,19 @@
 import Styles from './GameOfLife.module.css';
-import { Grid } from '../Grid'
+import { Grid } from '../Grid/Grid'
 import React, { useState, useEffect } from 'react'
-import { GameOfLifeModel } from '../Model/GameOfLife';
+import { GameOfLifeModel } from '../../Model/GameOfLife';
+import { Inputs } from '../Inputs/Inputs';
 
 export const GameOfLife = () => {
 
-  const [items, setItems] = useState(Array<boolean>(625).fill(false))
+  const [gridSize, setGridSize] = useState(26)
+  const [items, setItems] = useState(Array<boolean>(676).fill(false))
   const [playing, setPlaying] = useState(false)
-
+  
   let timeout: NodeJS.Timer;
 
   useEffect(() => {
-    if (playing) {
-      startTimer()
-    } else {
-      clearTimer()
-    }
+    playing ? startTimer() : clearTimer()
   })
 
   function startTimer() {
@@ -37,7 +35,7 @@ export const GameOfLife = () => {
   }
 
   function changeGridToNextGeneration() {
-    const model = new GameOfLifeModel(items)
+    const model = new GameOfLifeModel(items, gridSize)
     const newGrid = model.gridInNextGeneration()
     setItems(newGrid)
   }
@@ -50,14 +48,19 @@ export const GameOfLife = () => {
   function resetGame() {
     setPlaying(false)
     clearTimer()
-    setItems(Array<boolean>(625).fill(false))
+    setItems(Array<boolean>(gridSize * gridSize).fill(false))
+  }
+
+  function changeGridSize(size: number) {
+    setGridSize(size)
+    resetGame()
   }
 
   return (
     <div className={Styles.body}>
       <h1>Game Of Life</h1>
-      <p>Select cells and start the game!</p>
-      <Grid items={items} callBack={toggleStateOfCell} />
+      <Inputs size={gridSize} callback={changeGridSize}></Inputs>
+      <Grid items={items} size={gridSize} callBack={toggleStateOfCell} />
       <div>
         <button className={Styles.button} onClick={resetGame}>Reset</button>
         <button className={Styles.button} onClick={toggleGame}>{playing ? "Stop" : "Play"}</button>

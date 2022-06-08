@@ -12,7 +12,17 @@ interface CallBackFunction {
 
 interface GridProps {
     items: Array<boolean>
+    size: number
     callBack: CallBackFunction
 }
 
-export type { GridProps, CallBackFunction, CellProps }
+interface SizeProps {
+    size: number
+    callback: SizeCallBackFunction
+}
+
+interface SizeCallBackFunction {
+    (size: number): void
+}
+
+export type { GridProps, CallBackFunction, CellProps, SizeProps, SizeCallBackFunction }
